@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <algorithm>
 using namespace std;
 
@@ -10,7 +11,7 @@ void play_game(TicTacToe game);
 class TicTacToe
 {
 private:
-    char board[9] = {' ',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+    char board[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
     char current_turn = 'X';
     char winner = ' '; // ' ' refers to None
     int state = -1;    // -1 refers to running
@@ -37,7 +38,7 @@ private:
 public:
     int minmax(TicTacToe board, char max_symbol);
 };
-//main
+// main
 int main()
 {
     TicTacToe game;
@@ -58,11 +59,12 @@ void play_game(TicTacToe game)
         if (count % 2 == 1)
         {
             move = my_ai.minmax(game, game.current_turn);
-        } else
+        }
+        else
         {
             cout << "Enter your move (1-9)\n";
             cin >> move;
-            if (!cin) 
+            if (!cin)
             {
                 cerr << "Input error\n";
                 return;
@@ -81,7 +83,8 @@ void play_game(TicTacToe game)
             game.print_board();
             cout << game.winner << " wins the game!\n";
             playing = false;
-        } else if (game.state == 0)
+        }
+        else if (game.state == 0)
         {
             game.print_board();
             cout << "Draw!\n";
@@ -94,7 +97,17 @@ void play_game(TicTacToe game)
 void TicTacToe::print_board() const
 {
     system("clear");
-    cout << "Player 1 (X)  -  Player 2 (O)" << endl << endl;
+    // read di.txt line radomly
+    ifstream file("di.txt");
+    string line;
+    int random = rand() % 7;
+    for (int i = 0; i < random; i++)
+    {
+        getline(file, line);
+    }
+    cout << "***********" << line << "**********" << endl;
+
+    // cout << "Player 1 (X)  -  Player 2 (O)" << endl << endl;
     cout << endl;
 
     cout << "     |     |     " << endl;
@@ -110,7 +123,8 @@ void TicTacToe::print_board() const
 
     cout << "  " << board[6] << "  |  " << board[7] << "  |  " << board[8] << endl;
 
-    cout << "     |     |     " << endl << endl;
+    cout << "     |     |     " << endl
+         << endl;
 };
 
 void TicTacToe::swap_turn()
@@ -201,7 +215,8 @@ void TicTacToe::update_state()
 int AI::minmax(TicTacToe board, char max_symbol)
 {
     int best_score = -100;
-    int best_move = -1; // -1 refers to none
+    int best_move = -1;
+     // -1 refers to none
 
     for (auto move : board.get_possible_moves())
     {
