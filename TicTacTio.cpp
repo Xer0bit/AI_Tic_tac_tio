@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -18,7 +19,7 @@ private:
     vector<int> move_stack;
     void swap_turn();
     void update_state();
-
+//xer0bit
 public:
     friend class AI;
     friend void play_game(TicTacToe game);
@@ -45,7 +46,7 @@ int main()
     play_game(game);
     return 0;
 }
-
+//xer0 bit
 void play_game(TicTacToe game)
 {
     bool playing = true;
